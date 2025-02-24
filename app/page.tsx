@@ -28,6 +28,16 @@ export default function Home() {
       .then((res) => setWorkouts(res.data));
   }
 
+  const onDelete = async (id: string) => {
+    const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/workout/${id}`);
+    if (response.status === 200) {
+      alert("Workout deleted successfully!");
+      loadWorkouts();
+    } else {
+      alert("Error deleting workout."); 
+    }
+  };
+
   return (
     <>
       <div className="p-6">
@@ -36,6 +46,9 @@ export default function Home() {
           {workouts.map((workout) => (
             <li key={workout.id} className="border p-2 rounded mb-2">
               {workout.name} - {workout.sets} sets x {workout.reps} reps
+              <button onClick={() => onDelete(workout.id)} className="text-red-500 font-bold px-2">
+                ✖
+              </button>
             </li>
           ))}
         </ul>
