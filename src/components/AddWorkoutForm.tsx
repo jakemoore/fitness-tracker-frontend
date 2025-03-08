@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function AddWorkoutForm({ addWorkout }: { addWorkout: (workout: any) => Promise<boolean> }) {
+export default function AddWorkoutForm({ onAddWorkout }: { onAddWorkout: (workout: any) => Promise<boolean> }) {
   const [workout, setWorkout] = useState({ name: "", sets: "", reps: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -11,7 +11,7 @@ export default function AddWorkoutForm({ addWorkout }: { addWorkout: (workout: a
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const success = await addWorkout(workout);
+    const success = await onAddWorkout(workout);
     if (success) {
         setWorkout({ name: "", sets: "", reps: "" });
     }
