@@ -1,5 +1,7 @@
+'use client'
+
 import { useState } from "react";
-import { login, register } from "../firebase";
+import { login, register } from "../lib/firebase";
 
 interface Props {
     onSignInSuccess: () => void;
