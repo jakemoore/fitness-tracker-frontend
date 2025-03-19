@@ -23,7 +23,7 @@ const Sidebar = () => {
           className={`flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-700 ${pathname === "/history" ? "bg-gray-700" : ""}`}
         >
           <History size={20} />
-          <span>Workout History</span>
+          <span>Workout Logs</span>
         </Link>
       </nav>
     </div>

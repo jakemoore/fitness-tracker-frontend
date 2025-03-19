@@ -5,6 +5,10 @@ import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import { usePathname } from "next/navigation";
 import { AuthProvider } from "@/context/AuthContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const queryClient = new QueryClient();
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,8 +35,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex h-screen`}
       >
         <AuthProvider>
-          {!isAuthPage && <Sidebar />}
-          <main className="flex-1">{children}</main>
+          <QueryClientProvider client={queryClient}>
+            {!isAuthPage && <Sidebar />}
+            <main className="flex-1">{children}</main>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
         </AuthProvider>
       </body>
     </html>

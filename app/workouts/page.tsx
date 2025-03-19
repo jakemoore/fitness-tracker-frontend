@@ -2,15 +2,19 @@
 
 import AddWorkoutForm from "@/components/AddWorkoutForm";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { useAuthContext } from "@/context/AuthContext";
 import { addWorkout, deleteWorkout, getWorkouts, Workout } from "@/lib/workoutApi";
 import { useEffect, useState } from "react";
 
 export default function WorkoutsPage() {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
+  const { user } = useAuthContext();
 
   useEffect(() => {
-    loadWorkouts();
-  }, []);
+    if (user) {
+      loadWorkouts();
+    }
+  }, [user]);
 
   const onDelete = async (id: number | undefined) => {
     if (!id) return;
@@ -57,12 +61,10 @@ export default function WorkoutsPage() {
           ))}
         </ul>
       </div>
-
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-4">Add a Workout</h1>
         <AddWorkoutForm onAddWorkout={onAddWorkout} />
       </div>
     </ProtectedRoute>
   );
-
 }

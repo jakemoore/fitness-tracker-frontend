@@ -1,20 +1,30 @@
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
-// Define the Workout type (adjust fields as needed)
 export interface Workout {
-  id?: number;
+  id: number;
   name: string;
   sets: number;
   reps: number;
 }
 
-const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/workouts`;
+export interface WorkoutLog {
+  id: number;
+  workoutName: string;
+  dateCompleted: string;
+  sets: number;
+  reps: number;
+  weight?: number;
+  notes?: string;
+}
 
-// Function to get the Firebase auth token from localStorage
-const getAuthTokenFromLocalStorage = (): string | null => {
-  return localStorage.getItem("token");
-};
+export interface WorkoutLogs {
+  workoutLogs: WorkoutLog[];
+  totalLogs: number;
+  totalPages: number;
+}
+
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/workouts`;
 
 // Axios instance with auth headers
 const axiosInstance = axios.create();
@@ -45,17 +55,6 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-// Add the Authorization header with the Firebase token from localStorage
-// axiosInstance.interceptors.request.use((config) => {
-//   const token = localStorage.getItem("token");
-//   if (token) {
-//     config.headers["Authorization"] = `Bearer ${token}`;
-//   }
-//   return config;
-// }, (error) => {
-//   return Promise.reject(error);
-// });
-
 // Fetch all workouts
 export const getWorkouts = async (): Promise<Workout[]> => {
   const response = await axiosInstance.get<Workout[]>(API_BASE_URL);
@@ -71,4 +70,10 @@ export const addWorkout = async (workout: Workout): Promise<Workout> => {
 // Delete a workout by ID
 export const deleteWorkout = async (id: number): Promise<void> => {
   await axiosInstance.delete(`${API_BASE_URL}/${id}`);
+};
+
+// Fetch workout logs
+export const getWorkoutLogs = async (page: number): Promise<WorkoutLogs> => {
+  const response = await axiosInstance.get<WorkoutLogs>(`${API_BASE_URL}/logs?page=${page}&pageSize=10`);
+  return response.data;
 };
