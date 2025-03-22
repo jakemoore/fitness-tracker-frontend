@@ -18,6 +18,14 @@ export interface WorkoutLog {
   notes?: string;
 }
 
+export interface WorkoutLogDto {
+  workoutId: string;
+  sets: number;
+  reps: number;
+  weight?: number;
+  notes?: string;
+}
+
 export interface WorkoutLogs {
   workoutLogs: WorkoutLog[];
   totalLogs: number;
@@ -75,5 +83,11 @@ export const deleteWorkout = async (id: number): Promise<void> => {
 // Fetch workout logs
 export const getWorkoutLogs = async (page: number): Promise<WorkoutLogs> => {
   const response = await axiosInstance.get<WorkoutLogs>(`${API_BASE_URL}/logs?page=${page}&pageSize=10`);
+  return response.data;
+};
+
+// Add a new workout log
+export const addWorkoutLog = async (workoutLog: WorkoutLogDto): Promise<WorkoutLog> => {
+  const response = await axiosInstance.post<WorkoutLog>(`${API_BASE_URL}/logs`, workoutLog);
   return response.data;
 };
