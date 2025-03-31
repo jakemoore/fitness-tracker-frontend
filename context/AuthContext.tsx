@@ -24,10 +24,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
       setLoading(false);
-
-      if (firebaseUser && pathname === '/') {
-        router.push("/workouts"); // Redirect to workouts page on login
-      }
     });
 
     return () => unsubscribe();
