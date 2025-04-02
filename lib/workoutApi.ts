@@ -31,7 +31,7 @@ export interface WorkoutLogs {
   totalPages: number;
 }
 
-const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/workouts`;
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/workouts`;
 
 // Fetch all workouts
 export const getWorkouts = async (): Promise<Workout[]> => {

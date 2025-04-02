@@ -1,6 +1,6 @@
 import api from '@/lib/axios';
 
-const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard`;
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/dashboard`;
 
 export interface DashboardStats {
   workoutsThisWeek: number;
